@@ -9,24 +9,11 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T): number {
 }
 
 
-export function getComparator<Key extends keyof any>(order: Order, orderBy: Key): (
-  a: { [key in Key]: String },
-  b: { [key in Key]: String }
-) => number {
+export function getComparator(order: Order, orderBy: keyof Data): (a: Data, b: Data) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
-// export function getComparator<Key extends keyof any>(order: Order, orderBy: keyof Data): (
-//   a: { [key in Key]: String },
-//   b: { [key in Key]: String }
-// ) => number {
-//   return order === 'desc'
-//     ? (a, b) => descendingComparator(a, b, orderBy)
-//     : (a, b) => -descendingComparator(a, b, orderBy);
-// }
-
 
 export const stableSort = <T>(array: T[], comparator: (a: T, b: T) => number) => {
   const stabilizedThis = array.map((item, index) => [item, index] as [T, number]);
